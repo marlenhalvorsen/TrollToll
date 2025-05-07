@@ -1,0 +1,66 @@
+﻿@page "/trolltollpage"
+
+<h3>TrollToll</h3>
+
+<br />
+<div class="containter">
+	<div class="row">
+		<div class="row">
+			<div class="col-md-6">
+				<p> Troll Toll Price: @trollTollPrice</p>
+				<ButtonAndImage title="Thomas Damboe Troll" buttonLabel="Pay The Toll" imageName="troll" OnGenericClick="DidYouPayTheTrollToll"></ButtonAndImage>
+				<br />
+				<p>  @message</p>
+			</div>
+			<div class="col-md-6">
+				<p> Earned Gold: @goldMined</p>
+				<ButtonAndImage title="Earn Gold" buttonLabel="Click For Gold" imageName="guld" OnGenericClick="IncrementGold"></ButtonAndImage>
+
+			</div>
+		</div>
+		@if (trollTollPaid)
+		{
+			<div class="align-content-center">
+				<img width="300" height="250" src="Media/girl.png" />
+				<br />
+			</div>
+		}
+
+	</div>
+</div>
+
+@code {
+
+	public int trollTollPrice;
+	public int goldMined; 
+	public bool trollTollPaid; 
+	public string message;
+
+	protected override void OnInitialized() //happens before rendering
+	{
+		Random rand = new Random();
+
+		trollTollPrice = rand.Next(10, 20);
+		trollTollPaid = false;
+		goldMined = 0;
+		message = "";
+	}
+
+	protected void IncrementGold()
+	{
+		goldMined++;
+	}
+
+	protected void DidYouPayTheTrollToll()
+	{
+		if(goldMined < trollTollPrice)
+		{
+			message = "You Need To Earn Gold For The Troll Toll";
+		}
+		else {
+			trollTollPaid = true;
+			goldMined = goldMined - trollTollPrice;
+			message = "Thanks";
+		}
+	}
+}
