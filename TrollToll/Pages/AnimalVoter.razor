@@ -1,0 +1,78 @@
+﻿@page "/AnimalVoter"
+
+<h3>Vote for yout favourite Animal</h3>
+
+<br/>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<ButtonAndImage title="Cats" 
+			buttonLabel="Vote For Cats" 
+			imageName="Kitten" 
+			OnGenericClickWithType="IncrementVote">
+			</ButtonAndImage>
+			<p>Votes: @kittenVotes</p>
+			<br/>
+		</div>
+		<div class="col-md-4">
+			<ButtonAndImage title="Dogs" 
+			buttonLabel="Vote For Dogs" 
+			imageName="Puppy" 
+			OnGenericClickWithType="IncrementVote">
+			</ButtonAndImage>
+			<p>Votes: @dogVotes</p>
+			<br/>
++		</div>
+		<div class="col-md-4">
+			<ButtonAndImage title="Sloths" 
+			buttonLabel="Vote For Sloths" 
+			imageName="sloth" 
+			OnGenericClickWithType="IncrementVote">
+			</ButtonAndImage>
+			<p>Votes: @slothVotes</p>
+			<br/>
+		</div>
+		<p> @message</p>
+
+	</div>
+
+</div>
+
+
+@code {
+
+	public int kittenVotes; 
+	public int dogVotes;
+	public int slothVotes;
+	public string message; 
+
+	protected override void OnInitialized()
+	{
+		kittenVotes = 0;
+		dogVotes = 0;
+		slothVotes = 0;
+		message = "";
+	}
+
+	protected void IncrementVote(string animal)
+	{
+		switch (animal.ToLower())
+		{
+			case "cats":
+				kittenVotes++;
+				message = "You voted for cats!";
+				break; 
+			case "dogs":
+				dogVotes++;
+				message = "You voted for dogs!";
+				break; 
+			case "sloths":
+				slothVotes++;
+				message = "You voted for sloths!";
+				break; 
+
+		}
+	}
+
+}

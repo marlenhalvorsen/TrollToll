@@ -7,7 +7,8 @@
 	</div>
 	<br />
 	<div>
-		<input type="button" class="btn btn-primary" value="@ButtonName()" @onclick="args => GenericClick(args)" />
+		<input type="button" class="btn btn-primary" value="@ButtonName()" @onclick=" HandleClick" />
+
 	</div>
 </div>
 
@@ -16,11 +17,11 @@
 @code {
 
 	[Parameter]
-	public string title { get; set; } = "deafult";
+	public string title { get; set; } = "default";
 	[Parameter]
-	public string imageName { get; set; } = "deafult";
+	public string imageName { get; set; } = "default";
 	[Parameter]
-	public string buttonLabel { get; set; } = "deafult";
+	public string buttonLabel { get; set; } = "default";
 
 	public string ShowImage()
 	{
@@ -35,9 +36,20 @@
 	[Parameter]
 	public EventCallback<MouseEventArgs> OnGenericClick{get; set; }
 
-	public async Task GenericClick(MouseEventArgs args)
-	{
-		await OnGenericClick.InvokeAsync(args);
-	}
 
+	[Parameter]
+	public EventCallback<string> OnGenericClickWithType {get; set; }
+
+	public async Task HandleClick()
+	{
+		if (OnGenericClickWithType.HasDelegate)
+		{
+			await OnGenericClickWithType.InvokeAsync(title);
+		}
+		else if (OnGenericClick.HasDelegate)
+		{
+			await OnGenericClick.InvokeAsync(new MouseEventArgs());
+		}
+
+	}
 }
